@@ -30,6 +30,10 @@ speed = -720
 BP.set_sensor_type(one, BP.SENSOR_TYPE.TOUCH)
 BP.set_sensor_type(two, BP.SENSOR_TYPE.TOUCH)
 
+#Course Variables
+course = [[0 for i in range(20)] for j in range(10)]
+
+
 #Functions
 def setPower(ports, power):
     BP.set_motor_power(ports, power)
@@ -158,3 +162,10 @@ def navigate():
             turn(-90)
             print('reached t-junction')
     pass 
+
+def printMap():
+    for i in course:
+        for j in i:
+            print(str(j), end=" ")
+        print()
+    pass
