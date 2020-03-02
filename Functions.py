@@ -65,7 +65,7 @@ def getData():
     gyro = mpu.readGyro()
     acc = mpu.readAccel()
     
-    return(touch, dist, gyro)
+    return(touch, dist)
 
 def checkDist(dataIn):
     if (dataIn[1] <= 10):
@@ -94,11 +94,67 @@ def turn(deg):
     allStop()
     pass
 
-def navPoint(p1):
-    travDist(p1[0])
-    if (p1[1] > 0):
+def navPointX(x, y):
+    travDist(x)
+    print('reached 1')
+    if (y > 0):
         turn(90)
-    elif (p1[1] < 0):
+        print('reached 2')
+    elif (y < 0):
         turn(-90)
-    travDist(p1[1])
+        print('reached 3')
+    print('reached 4')
+    travDist(y)
+    print('reached 5')
+    if (y > 0):
+        turn(-90)
+        print('reached 6')
+    elif (y < 0):
+        turn(90)
+        print('reached 7')
     pass
+
+def navPointY(x, y):
+    print('reached 1')
+    if (y > 0):
+        turn(90)
+        print('reached 2')
+    elif (y < 0):
+        turn(-90)
+        print('reached 3')
+    print('reached 4')
+    travDist(y)
+    print('reached 5')
+    if (y > 0):
+        turn(-90)
+        print('reached 6')
+    elif (y < 0):
+        turn(90)
+        print('reached 7')
+    travDist(x)
+    pass
+
+def navigate():
+    dis = 25
+    dis2 = 25
+    side = 20
+    while (True):
+        travDist(40)
+        data = getData()[1]
+        if (data['f'] <= dis and data['r'] <= side and data['l'] <= side):
+            turn(180)
+            print('reached dead end')
+        if (data['f'] <= dis and data['r'] > side and data['l'] <= side):
+            turn(90)
+            print('reached right turn')
+        if (data['f'] <= dis and data['r'] <= side and data['l'] > side):
+            turn(-90)
+            print('reached left turn')
+        if (data['f'] > dis and data['r'] > side and data['l'] > side):
+            allStop()
+            print('reached end')
+            break
+        if (data['f'] <= dis2 and data['r'] > side and data['l'] > side):
+            turn(-90)
+            print('reached t-junction')
+    pass 

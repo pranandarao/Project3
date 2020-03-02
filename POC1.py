@@ -1,5 +1,5 @@
 from MPU9250 import MPU9250
-from Functions import setDPS, setPower, setSpeed, allStop, stop, getData, checkDist, travDist, turn, navPoint
+from Functions import setDPS, setPower, setSpeed, allStop, stop, getData, checkDist, travDist, turn, navPointX, navPointY, navigate 
 import grovepi
 import brickpi3
 import time
@@ -36,8 +36,6 @@ BP.set_sensor_type(one, BP.SENSOR_TYPE.TOUCH)
 BP.set_sensor_type(two, BP.SENSOR_TYPE.TOUCH)
 #BP.set_sensor_type(four, BP.SENSOR_TYPE.CUSTOM, [(BP.SENSOR_CUSTOM.PIN1_ADC)])
 
-
-
 #Main Area
 allStop()
 powerMode = False
@@ -51,7 +49,7 @@ try:
             print(data)
             
             if (data[0] == 1):
-                navPoint((50, 50))
+                navPointY(100,50)
             
             #checkDist(data)
 
