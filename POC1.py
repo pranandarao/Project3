@@ -1,5 +1,5 @@
 from MPU9250 import MPU9250
-from Functions import setDPS, setDPS, setSpeed, allStop, stop, getData, checkDist, travDist, turn
+from Functions import setDPS, setPower, setSpeed, allStop, stop, getData, checkDist, travDist, turn, navPoint
 import grovepi
 import brickpi3
 import time
@@ -43,7 +43,7 @@ allStop()
 powerMode = False
 initTime = time.time()
 
-try:a
+try:
     while True:
         try:
             #Control Logic
@@ -51,7 +51,7 @@ try:a
             print(data)
             
             if (data[0] == 1):
-                turn(720)
+                navPoint((50, 50))
             
             #checkDist(data)
 

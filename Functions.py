@@ -33,56 +33,55 @@ BP.set_sensor_type(two, BP.SENSOR_TYPE.TOUCH)
 #Functions
 def setPower(ports, power):
     BP.set_motor_power(ports, power)
-    return()
+    pass
 
 def setDPS(ports, power):
     BP.set_motor_dps(ports, power)
-    return()
+    pass
 
 def setSpeed(ports, speed):
     speed = speed * 27
     BP.set_motor_dps(ports, speed)
-    return()
+    pass
 
 def allStop():
     BP.set_motor_power(A + B + C + D, 0)
-    return()
+    pass
 
 def stop(ports):
     BP.set_motor_power(ports, 0)
-    return()
+    pass
 
 def getData():
     touch = BP.get_sensor(one)
     dist = {'f':grovepi.ultrasonicRead(front), 'r':grovepi.ultrasonicRead(right), 'l':grovepi.ultrasonicRead(left)}
     
-    temp = AvgCali(mpu, 5, 0.01)
+    #temp = AvgCali(mpu, 5, 0.01)
+    #acc = {'x':temp[0], 'y':temp[1], 'z':temp[2]}
+    #gyro = {'x':temp[3], 'y':temp[4], 'z':temp[5]}
+    #mag = {'x':temp[6], 'y':temp[7], 'z':temp[8]}
     
-    acc = {'x':temp[0], 'y':temp[1], 'z':temp[3]}
-    gyro = {'x':temp[4], 'y':temp[5], 'z':temp[6]}
-    mag = {'x':temp[7], 'y':temp[8], 'z':temp[9]}
+    mag = mpu.readMagnet()
+    gyro = mpu.readGyro()
+    acc = mpu.readAccel()
     
-    #mag = mpu.readMagnet()
-    #gyro = mpu.readGyro()
-    #acc = mpu.readAccel()
-    
-    return(touch, dist, mag, gyro)
+    return(touch, dist, gyro)
 
 def checkDist(dataIn):
     if (dataIn[1] <= 10):
         allStop()
         powerMode = False
-    return()
+    pass
 
 def travDist(dist):
     t = (dist / 10.5) / 2
     setDPS(A + D, speed)
     time.sleep(t)
     allStop()
-    return()
+    pass
 
 def turn(deg):
-    circ = math.pi * 18.5
+    circ = math.pi * 19.0
     temp = (abs(deg) / 360) * circ
     t = (temp / 10.5) / 2
     if (deg < 0):
@@ -93,4 +92,13 @@ def turn(deg):
         setDPS(D, speed)
     time.sleep(t)
     allStop()
-    return()
+    pass
+
+def navPoint(p1):
+    travDist(p1[0])
+    if (p1[1] > 0):
+        turn(90)
+    elif (p1[1] < 0):
+        turn(-90)
+    travDist(p1[1])
+    pass
