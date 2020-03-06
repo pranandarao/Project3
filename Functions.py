@@ -32,7 +32,7 @@ BP.set_sensor_type(two, BP.SENSOR_TYPE.TOUCH)
 
 #Course Variables
 course = [[0 for i in range(20)] for j in range(10)]
-
+orient = 0
 
 #Functions
 def setPower(ports, power):
